@@ -1,5 +1,8 @@
 ﻿Public Class Form1
 
+    Private FileToRead As String = "" 'This needs to be set manually for the ReadEXEFromFile method, otherwise is irrelevant
+    Private DirectoryToRead As String = "" 'This needs to be set manually for the ReadFromDirectory method, otherwise is irrelevant
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         'Application Loading
 
@@ -36,6 +39,27 @@
         'Check everything
         For i As Integer = 0 To CheckedListBox1.Items.Count - 1
             CheckedListBox1.SetItemChecked(i, True)
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' Reads EXEs from a file with the following format EXEPath:args
+    ''' </summary>
+    Private Sub ReadEXEFromFile()
+        Dim fl As String() = IO.File.ReadAllLines(FileToRead)
+
+        For Each l In fl
+            Dim s As String() = l.Split(":")
+            CheckedListBox1.Items.Add(New ProgramExe(s(0), s(1)))
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' Reads every EXE in the root directory and adds them
+    ''' </summary>
+    Private Sub ReadFromDirectory()
+        For Each d In My.Computer.FileSystem.GetFiles(DirectoryToRead, FileIO.SearchOption.SearchTopLevelOnly, "*.exe")
+            CheckedListBox1.Items.Add(New ProgramExe(d, ""))
         Next
     End Sub
 End Class
