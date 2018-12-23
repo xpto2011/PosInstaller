@@ -15,17 +15,23 @@
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         'Run executables
+        Dim TotalToInstall As Integer = CheckedListBox1.CheckedItems.Count
+        Dim TotalInstalled As Integer = 0
+
         For Each i In CheckedListBox1.CheckedItems
-            Dim item As ProgramExe = CType(i, ProgramExe)
+            Dim Item As ProgramExe = CType(i, ProgramExe)
             'MsgBox(item.exe & vbNewLine & item.args)
             'run prog
             'Dim psi As New ProcessStartInfo(item.exe, item.args)
-            Dim psi As ProcessStartInfo = item.toProcessStartInfo()
+            Dim psi As ProcessStartInfo = Item.ToProcessStartInfo()
             Dim p As New Process() With {
                 .StartInfo = psi
             }
             p.Start()
             p.WaitForExit()
+
+            TotalInstalled += 1
+            ProgressBar1.Value = TotalInstalled / 100 * TotalToInstall
         Next
     End Sub
 

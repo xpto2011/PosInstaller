@@ -1,7 +1,7 @@
 ﻿Public Class ProgramExe
 
-    Public ReadOnly Property exe As String
-    Public ReadOnly Property args As String
+    Public ReadOnly Property Exe As String
+    Public ReadOnly Property Args As String
     Public ReadOnly Property DisplayName As String
 
     ''' <summary>
@@ -11,8 +11,8 @@
     ''' <param name="args">EXE Arguments</param>
     ''' <param name="DisplayName">Name to shown in the CheckedListBox. Defaults to the exe name if none is provided.</param>
     Public Sub New(ByVal exe As String, ByVal args As String, Optional ByVal DisplayName As String = "")
-        Me.exe = exe
-        Me.args = args
+        Me.Exe = exe
+        Me.Args = args
         Me.DisplayName = IIf(DisplayName = "", IO.Path.GetFileName(exe), DisplayName)
     End Sub
 
@@ -20,8 +20,8 @@
     ''' Returns a new ProcessStartInto object for the EXE
     ''' </summary>
     ''' <returns>new ProcessStartInfo with exe and args</returns>
-    Public Function toProcessStartInfo() As ProcessStartInfo
-        Return New ProcessStartInfo(exe, args)
+    Public Function ToProcessStartInfo() As ProcessStartInfo
+        Return New ProcessStartInfo(Exe, Args)
     End Function
 
     Public Overrides Function ToString() As String
